@@ -1,0 +1,96 @@
+espacios = int(0)
+espaciosDisponinles = int(0)
+opcion= 0
+intento = 0
+
+
+
+user = input("Vamos a crear el usuario. Ingrese el nombre del usuario: ")
+passw = input("Vamos a crear la contraseña. Ingrese la contraseña: ")
+
+f= open("Reservas.txt","w")
+f.write(user+"\t"+passw)
+f.close()
+
+user = ""
+passw = ""
+
+    
+
+#                                                      #
+#       Lee el .txt del archivo con usser y password   #
+#                                                      #
+
+f= open("Reservas.txt","r")
+#                                                                                               #
+#             Se lee el documento para guardar las credenciales del user en variables.          #
+#                                                                                               #
+skip = False
+for i in f.read():
+    if skip == False and i != "\t":
+        user+=i
+    elif skip and i:
+        passw+=i
+    if i == "\t":
+        skip= True
+    
+f.close()
+
+#                                   #
+#               Logueo              #
+#                                   #
+usuario = ""
+clave = ""
+
+print("Porvavor ingrese su usuario y contraseña")
+
+while usuario != user or clave != passw and intento <= 3:
+    usuario = input("Usuario:")
+    clave = input("Clave:")
+    if usuario == user and clave == passw:
+        print("Bienvenido Admin, vamos a hacer las resrvaciones")
+        break
+    else:
+        print("Error, intente otra vez")
+        intento += 1
+        if intento == 3:
+            quit("La contraseña es incorrecta")
+
+#                   #
+#      Programa     #
+#                   #
+
+espaciosDisponinles = int(input("¿Cuántos espacios tiene disponible para sus invitados?: "))
+espacios = espaciosDisponinles
+
+while opcion !=4:
+    print("\t.:MENÚ:.")
+    print("1. Reservar Espacio.")
+    print("2. Anular Espacio.")
+    print("3. Ver espacios disponibles.")
+    print("4. Salir.")
+
+    
+    
+    opcion = int(input("Seleccione una opción de menú: "))
+
+    print("\t")
+
+    if opcion==1:
+        extra = int(input("¿Cuántos espacios desea reservar? -> "))
+        espacios -= extra
+        print (f"Espacios disponibles: {espacios}")
+    elif opcion==2:
+        cancelar = int(input("Espacios que desea cancelar -> "))
+        if cancelar>espacios:
+            print(f"No hay esta cantidad de espacios")
+        else:
+            espacios += cancelar
+            print (f"Espacios disponibles: {espacios}")
+    elif opcion==3:
+        print (f"Espacios disponibles: {espacios}")
+    elif opcion==4:
+        print ("Gracias por reservar con nosotros")
+    else:
+        print (f"Erorr, no existe esta opción en el menú.")
+
